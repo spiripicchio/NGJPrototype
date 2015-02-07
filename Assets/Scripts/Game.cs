@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using UnityEngine.UI;
 
 public class Game : MonoBehaviour
 {
@@ -8,6 +9,9 @@ public class Game : MonoBehaviour
 	public TileMap tileMap;
 	public float respawnCooldown;
 	public int lives;
+	public Text outroMessage;
+	public Text score1Text;
+	public Text score2Text;
 
 	enum WinningPlayer
 	{
@@ -22,6 +26,8 @@ public class Game : MonoBehaviour
 	IEnumerator _resetPlayerTwoCoroutine;
 	bool _inCoroutineOne;
 	bool _inCoroutineTwo;
+	int _score1;
+	int _score2;
 
 	// Use this for initialization
 	void Start() 
@@ -33,7 +39,7 @@ public class Game : MonoBehaviour
 	{
 		while (true)
 		{
-			ShowIntro();
+			Reset();
 
 			while (_winningPlayer == WinningPlayer.Unknown)
 			{
@@ -51,11 +57,37 @@ public class Game : MonoBehaviour
 				_inCoroutineTwo = false;
 			}
 
-			ShowOutro();
+			// Outro
+			switch (_winningPlayer)
+			{
+				case WinningPlayer.PlayerOne:
+				{
+					outroMessage.text = "PLAYER ONE WINS!";
+					++_score1;
+					score1Text.text = _score1.ToString();
+					break;
+				}
+
+				case WinningPlayer.PlayerTwo:
+				{
+					outroMessage.text = "PLAYER TWO WINS!";
+					++_score2;
+					score2Text.text = _score2.ToString();
+					break;
+				}
+
+				case WinningPlayer.None:
+				{
+					outroMessage.text = "FAIL!";
+					break;
+				}
+			}
+
+			yield return new WaitForSeconds(5);
 		}
 	}
 
-	void ShowIntro()
+	void Reset()
 	{
 		_winningPlayer = WinningPlayer.Unknown;
 
@@ -68,16 +100,21 @@ public class Game : MonoBehaviour
 
 		playerOne.goalTile = tileMap.goalTiles[0];
 		playerTwo.goalTile = tileMap.goalTiles[1];
-	}
 
-	void ShowOutro()
-	{
-
+		outroMessage.text = "";
 	}
 
 	// Update is called once per frame
 	void Update() 
 	{
+		if (Input.GetButtonDown("Jump") == true)
+		{
+			_score1 = 0;
+			score1Text.text = "0";
+			_score2 = 0;
+			score2Text.text = "0";
+		}
+
 		if (_winningPlayer == WinningPlayer.Unknown)
 		{
 			if (playerOne.isDead == true && playerTwo.isDead == true)

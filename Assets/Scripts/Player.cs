@@ -92,7 +92,26 @@ public class Player : MonoBehaviour
 				directionInput = -Vector2.up;
 			}
 		}
-#endif
+		else
+		{
+			if (Input.GetAxis("Horizontal2") < 0)
+			{
+				directionInput = -Vector2.right;
+			}
+			if (Input.GetAxis("Horizontal2") > 0)
+			{
+				directionInput = Vector2.right;
+			}
+			if (Input.GetAxis("Vertical2") > 0)
+			{
+				directionInput = Vector2.up;
+			}
+			if (Input.GetAxis("Vertical2") < 0)
+			{
+				directionInput = -Vector2.up;
+			}
+		}
+		#endif
 
 		if (directionInput  == _previousDirectionInput || _moveTimer > 0) 
 		{
