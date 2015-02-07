@@ -22,6 +22,8 @@ public class Player : MonoBehaviour
 	public GameObject footstepsPrefab;
 
 	public TileMap tileMap;
+	public bool isDead;
+	public bool reachedGoal;
 
 	float _moveTimer;
 	Vector2 _previousDirectionInput;
@@ -32,6 +34,16 @@ public class Player : MonoBehaviour
 	{
 		RotateTo (currentDirection);
 		transform.localPosition = new Vector3(coord.x, coord.y, -1)	;
+	}
+
+	public void Reset()
+	{
+		isDead = false;
+		reachedGoal = false;
+		_moveTimer = 0;
+		_previousDirectionInput = Vector2.zero;
+		_vibrating = false;
+		GetComponent<SpriteRenderer> ().color = Color.white;
 	}
 
 	Vector2 GetDirectionInput()
@@ -55,21 +67,24 @@ public class Player : MonoBehaviour
 			directionInput = Vector2.right;
 		}
 #else
-		if (Input.GetAxis("Horizontal") < 0)
+		if (playerIndex == PlayerIndex.One)
 		{
-			directionInput = -Vector2.right;
-		}
-		if (Input.GetAxis("Horizontal") > 0)
-		{
-			directionInput = Vector2.right;
-		}
-		if (Input.GetAxis("Vertical") > 0)
-		{
-			directionInput = Vector2.up;
-		}
-		if (Input.GetAxis("Vertical") < 0)
-		{
-			directionInput = -Vector2.up;
+			if (Input.GetAxis("Horizontal") < 0)
+			{
+				directionInput = -Vector2.right;
+			}
+			if (Input.GetAxis("Horizontal") > 0)
+			{
+				directionInput = Vector2.right;
+			}
+			if (Input.GetAxis("Vertical") > 0)
+			{
+				directionInput = Vector2.up;
+			}
+			if (Input.GetAxis("Vertical") < 0)
+			{
+				directionInput = -Vector2.up;
+			}
 		}
 #endif
 
@@ -94,15 +109,18 @@ public class Player : MonoBehaviour
 		Tile targetTile = tileMap.GetTileAt (targetCoord);
 		Tile currentTile = tileMap.GetTileAt (coord);
 
-		if (targetTile.allowsFootsteps || currentTile.allowsFootsteps) {
+		if (targetTile.allowsFootsteps || currentTile.allowsFootsteps) 
+		{
 			Instantiate (footstepsPrefab, (coord + targetCoord) / 2, Quaternion.LookRotation (new Vector3 (0, 0, -1), currentDirection));
 		}
 
 		transform.localPosition = targetCoord;
 		coord = targetCoord;
 
-		if (targetTile.type == Tile.TileType.Pit) {
+		if (targetTile.type == Tile.TileType.Pit) 
+		{
 			GetComponent<SpriteRenderer> ().color = Color.red;
+			isDead = true;
 		}
 	}
 
@@ -121,7 +139,7 @@ public class Player : MonoBehaviour
 
 	public void HearDanger()
 	{
-		StartCoroutine (HearDangerCoroutine ());
+		StartCoroutine(HearDangerCoroutine());
 	}
 
 	IEnumerator HearDangerCoroutine()
@@ -144,24 +162,31 @@ public class Player : MonoBehaviour
 	// Update is called once per frame
 	void Update () 
 	{
-		Vector2 dir = GetDirectionInput ();
-
-		if (dir.sqrMagnitude > 0) {
-
-			Vector2 targetCoord = coord + dir;
-
-			if (dir == currentDirection) {
-				MoveTo(targetCoord);
-			} else {
-				RotateTo(dir);
+		if (isDead == false)
+		{
+			Vector2 dir = GetDirectionInput();
+			
+			if (dir.sqrMagnitude > 0) 
+			{
+				Vector2 targetCoord = coord + dir;
+				
+				if (dir == currentDirection) 
+				{
+					MoveTo(targetCoord);
+				}
+				else 
+				{
+					RotateTo(dir);
+				}
+				
+				CheckDanger(coord + dir);
 			}
-
-			CheckDanger(coord + dir);
-		}
-
-		// Update vibration
-		if (_vibrating) {
-			//GamePad.SetVibration (playerIndex, vibrateStrengthLeft, vibrateStrengthRight);
+			
+			// Update vibration
+			if (_vibrating) 
+			{
+				//GamePad.SetVibration (playerIndex, vibrateStrengthLeft, vibrateStrengthRight);
+			}
 		}
 	}
 }
