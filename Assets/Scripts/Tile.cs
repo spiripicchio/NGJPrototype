@@ -57,6 +57,8 @@ public class Tile : MonoBehaviour
 	{
 		goalFor = player;
 		GetComponent<SpriteRenderer> ().color = Color.blue;
+		transform.FindChild ("Snow").GetComponent<SpriteRenderer>().color = Color.blue;
+
 	}
 
 
