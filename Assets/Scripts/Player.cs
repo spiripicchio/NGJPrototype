@@ -72,7 +72,7 @@ public class Player : MonoBehaviour
 		{
 			directionInput = Vector2.right;
 		}
-#else
+#endif
 		if (playerIndex == PlayerIndex.One)
 		{
 			if (Input.GetAxis("Horizontal") < 0)
@@ -92,7 +92,6 @@ public class Player : MonoBehaviour
 				directionInput = -Vector2.up;
 			}
 		}
-#endif
 
 		if (directionInput  == _previousDirectionInput || _moveTimer > 0) 
 		{

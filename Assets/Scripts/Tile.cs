@@ -4,7 +4,7 @@ using System.Collections.Generic;
 public class Tile : MonoBehaviour 
 {
 	public Sprite defaultSprite;
-	public Sprite sandSprite;
+	public List<Sprite> snowTiles;
 
 	public enum TileType
 	{
@@ -32,7 +32,7 @@ public class Tile : MonoBehaviour
 		allowsFootsteps = allow;
 
 		if (allowsFootsteps) {
-			GetComponent<SpriteRenderer> ().sprite = sandSprite;
+			GetComponent<SpriteRenderer> ().sprite = snowTiles[15];
 		} else {
 			GetComponent<SpriteRenderer> ().sprite = defaultSprite;
 			//GetComponent<SpriteRenderer> ().color = new Color(0,0,0,0);
@@ -80,5 +80,37 @@ public class Tile : MonoBehaviour
 			}
 		}
 		return false;
+	}
+
+	
+	public void AutoTile()
+	{
+		SpriteRenderer snow = transform.FindChild ("Snow").GetComponent<SpriteRenderer> ();
+		//snow.gameObject.SetActive (false);
+		if (allowsFootsteps) {
+			snow.sprite = snowTiles[0];
+			return;
+		}
+		Vector2 me = transform.localPosition;
+		int idx = 0;
+		foreach (Tile neighbor in _neighbors) {
+			Vector2 other = neighbor.transform.localPosition;
+
+			if (neighbor.allowsFootsteps) {
+				if (me.y < other.y) {
+					idx += 1;
+				} else if (me.x < other.x) {
+					idx += 2;
+				} else if (me.y > other .y) {
+					idx += 4;
+				} else if (me.x > other.x) {
+					idx += 8;
+				}
+			}
+		}
+		if (idx == 0) {
+			snow.enabled = false;
+		} 
+		snow.sprite = snowTiles [idx];
 	}
 }
