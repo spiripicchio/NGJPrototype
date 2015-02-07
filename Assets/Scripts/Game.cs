@@ -6,6 +6,8 @@ public class Game : MonoBehaviour
 	public Player playerOne;
 	public Player playerTwo;
 	public TileMap tileMap;
+	public float respawnCooldown;
+	public int lives;
 
 	enum WinningPlayer
 	{
@@ -68,32 +70,37 @@ public class Game : MonoBehaviour
 	// Update is called once per frame
 	void Update() 
 	{
-		if (playerOne.isDead == true && playerTwo.isDead == true)
+		if (_winningPlayer == WinningPlayer.Unknown)
 		{
-			Debug.Log("Game over\n");
-			_winningPlayer = WinningPlayer.None;
-		}
-		else if (playerOne.reachedGoal == true)
-		{
-			Debug.Log("Won 1\n");
-			_winningPlayer = WinningPlayer.PlayerOne; 
-		}
-		else if (playerTwo.reachedGoal == true)
-		{
-			Debug.Log("Won 2\n");
-			_winningPlayer = WinningPlayer.PlayerTwo; 
-		}
-		else
-		{
-			if (playerOne.isDead == true && _inCoroutineOne == false)
+			if (playerOne.isDead == true && playerTwo.isDead == true)
 			{
-				_resetPlayerOneCoroutine = ResetPlayerAndWait(playerOne);
-				StartCoroutine(_resetPlayerOneCoroutine);
+				Debug.Log("Game over\n");
+				_winningPlayer = WinningPlayer.None;
 			}
-			if (playerTwo.isDead == true && _inCoroutineTwo == false)
+			else if (playerOne.reachedGoal == true)
 			{
-				_resetPlayerTwoCoroutine = ResetPlayerAndWait(playerTwo);
-				StartCoroutine(_resetPlayerTwoCoroutine);
+				Debug.Log("Won 1\n");
+				_winningPlayer = WinningPlayer.PlayerOne; 
+			}
+			else if (playerTwo.reachedGoal == true)
+			{
+				Debug.Log("Won 2\n");
+				_winningPlayer = WinningPlayer.PlayerTwo; 
+			}
+			else
+			{
+				if (playerOne.isDead == true && _inCoroutineOne == false && playerOne.lives > 0)
+				{
+					--playerOne.lives;
+					_resetPlayerOneCoroutine = ResetPlayerAndWait(playerOne);
+					StartCoroutine(_resetPlayerOneCoroutine);
+				}
+				if (playerTwo.isDead == true && _inCoroutineTwo == false && playerTwo.lives > 0)
+				{
+					--playerTwo.lives;
+					_resetPlayerTwoCoroutine = ResetPlayerAndWait(playerTwo);
+					StartCoroutine(_resetPlayerTwoCoroutine);
+				}
 			}
 		}
 	}
@@ -109,7 +116,7 @@ public class Game : MonoBehaviour
 			_inCoroutineTwo = true;
 		}
 
-		yield return new WaitForSeconds(5);
+		yield return new WaitForSeconds(respawnCooldown);
 
 		ResetPlayer(player);
 	}
@@ -118,5 +125,6 @@ public class Game : MonoBehaviour
 	{
 		player.Reset();
 		player.SetStartingPosition(tileMap.startingTiles[(int)player.playerIndex].transform.localPosition);
+		player.lives = lives;
 	}
 }

@@ -462,6 +462,8 @@ MonoBehaviour:
   playerOne: {fileID: 477914233}
   playerTwo: {fileID: 760663467}
   tileMap: {fileID: 1118868310}
+  respawnCooldown: 3
+  lives: 3
 --- !u!4 &1992572107
 Transform:
   m_ObjectHideFlags: 0

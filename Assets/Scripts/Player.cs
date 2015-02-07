@@ -29,6 +29,8 @@ public class Player : MonoBehaviour
 	public bool reachedGoal;
 	[HideInInspector]
 	public Tile goalTile;
+	[HideInInspector]
+	public int lives;
 
 	float _moveTimer;
 	Vector2 _previousDirectionInput;
@@ -126,6 +128,11 @@ public class Player : MonoBehaviour
 		{
 			GetComponent<SpriteRenderer> ().color = Color.red;
 			isDead = true;
+		}
+		else if (targetTile == goalTile)
+		{
+			GetComponent<SpriteRenderer> ().color = Color.green;
+			reachedGoal = true;
 		}
 	}
 
