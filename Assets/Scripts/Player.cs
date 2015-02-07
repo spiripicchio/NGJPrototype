@@ -21,6 +21,8 @@ public class Player : MonoBehaviour {
 
 	public Player receivingPlayer;
 
+	public TileMap tileMap;
+
 	float moveTimer;
 	Vector2 previousDirectionInput;
 	bool vibrating;
@@ -61,16 +63,24 @@ public class Player : MonoBehaviour {
 		transform.localRotation = Quaternion.LookRotation (new Vector3(0,0,-1), direction);
 	}
 
-	void MoveTo(Vector2 direction)
+	void MoveTo(Vector2 targetCoord)
 	{
-		transform.localPosition = transform.localPosition + (Vector3)direction;
+		coord = targetCoord;
+		transform.localPosition = targetCoord;
+
+		Tile newTile = tileMap.GetTileAt (targetCoord);
+		if (newTile.type == Tile.TileType.Pit) {
+			GetComponent<SpriteRenderer> ().color = Color.red;
+		}
 	}
 
 	void CheckDanger(Vector2 atCoord)
 	{
-		// TODO: Ask map what's up;
-		bool danger = true;
+		//Debug.Log (atCoord);
+		Tile targetTile = tileMap.GetTileAt (atCoord);
+		bool danger = targetTile.type == Tile.TileType.Pit;
 
+		//targetTile.GetComponent<SpriteRenderer> ().color = new Color(Random.value * .2f,Random.value * .5f, 1);
 		if (danger) {
 			receivingPlayer.HearDanger ();
 		}
@@ -99,6 +109,7 @@ public class Player : MonoBehaviour {
 		Vector2 dir = GetDirectionInput ();
 
 		if (dir.sqrMagnitude > 0) {
+
 			Vector2 targetCoord = coord + dir;
 
 			if (dir == currentDirection) {
@@ -107,7 +118,7 @@ public class Player : MonoBehaviour {
 				RotateTo(dir);
 			}
 
-			CheckDanger(targetCoord);
+			CheckDanger(coord + dir);
 		}
 
 		// Update vibration

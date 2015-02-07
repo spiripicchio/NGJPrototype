@@ -5,16 +5,16 @@ using System.Collections.Generic;
 public class TileMap : MonoBehaviour 
 {
 	public List<Sprite> sprites;
-	public GameObject tilePrefab;
+	public Tile tilePrefab;
 	public GameObject footstepsPrefab;
 	public int mapWidth;
 	public int mapHeight;
 
-	List<GameObject> _tiles;
+	List<Tile> _tiles;
 
 	void Awake()
 	{
-		_tiles = new List<GameObject>();
+		_tiles = new List<Tile>();
 	}
 
 	// Use this for initialization
@@ -24,21 +24,20 @@ public class TileMap : MonoBehaviour
 		{
 			for (int x = 0; x < mapWidth; ++x)
 			{
-				GameObject tileObject = (GameObject)Instantiate(tilePrefab, new Vector3(x, y), Quaternion.identity);
-				tileObject.transform.parent = transform;
-				tileObject.GetComponent<SpriteRenderer>().sprite = sprites[Random.Range(0, 4)];
+				Tile tile = (Tile)Instantiate(tilePrefab, new Vector3(x, y), Quaternion.identity);
+				tile.transform.parent = transform;
 
-				Tile tile = tileObject.GetComponent<Tile>();
-				tile.type = Tile.TileType.Bomb;
-				tile.allowsFootsteps = Random.Range(0, 2) == 0 ? false : true;
+				tile.SetFootsteps(Random.value > 0.5);
 
-				_tiles.Add(tileObject);
+				tile.SetPit(Random.value > 0.8);
+
+				_tiles.Add(tile);
 			}
 		}
 	}
 
-	public GameObject GetTileAt(int x, int y)
+	public Tile GetTileAt(Vector2 coord)
 	{
-		return _tiles[(y * mapWidth) + y];
+		return _tiles[(Mathf.FloorToInt(coord.y) * mapWidth) + Mathf.FloorToInt(coord.x)];
 	}
 }

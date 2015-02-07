@@ -40,6 +40,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d448546640fa143b5bd9d0c04f89775f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  defaultSprite: {fileID: 21300000, guid: 938c636ce625142129074532fa572de7, type: 3}
+  sandSprite: {fileID: 21300000, guid: 6258e2fe0101840c6b431fb002739ae6, type: 3}
   type: 0
   allowsFootsteps: 0
 --- !u!212 &21227128
