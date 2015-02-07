@@ -18,6 +18,8 @@ public class Game : MonoBehaviour
 	WinningPlayer _winningPlayer;
 	IEnumerator _resetPlayerOneCoroutine;
 	IEnumerator _resetPlayerTwoCoroutine;
+	bool _inCoroutineOne;
+	bool _inCoroutineTwo;
 
 	// Use this for initialization
 	void Start() 
@@ -38,6 +40,8 @@ public class Game : MonoBehaviour
 
 			StopCoroutine(_resetPlayerOneCoroutine);
 			StopCoroutine(_resetPlayerTwoCoroutine);
+			_inCoroutineOne = false;
+			_inCoroutineTwo = false;
 
 			ShowOutro();
 		}
@@ -81,12 +85,12 @@ public class Game : MonoBehaviour
 		}
 		else
 		{
-			if (playerOne.isDead == true)
+			if (playerOne.isDead == true && _inCoroutineOne == false)
 			{
 				_resetPlayerOneCoroutine = ResetPlayerAndWait(playerOne);
 				StartCoroutine(_resetPlayerOneCoroutine);
 			}
-			if (playerTwo.isDead == true)
+			if (playerTwo.isDead == true && _inCoroutineTwo == false)
 			{
 				_resetPlayerTwoCoroutine = ResetPlayerAndWait(playerTwo);
 				StartCoroutine(_resetPlayerTwoCoroutine);
@@ -96,6 +100,15 @@ public class Game : MonoBehaviour
 
 	IEnumerator ResetPlayerAndWait(Player player)
 	{
+		if (player.playerIndex == XInputDotNetPure.PlayerIndex.One)
+		{
+			_inCoroutineOne = true;
+		}
+		if (player.playerIndex == XInputDotNetPure.PlayerIndex.Two)
+		{
+			_inCoroutineTwo = true;
+		}
+
 		yield return new WaitForSeconds(5);
 
 		ResetPlayer(player);
