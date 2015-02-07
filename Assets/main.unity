@@ -333,7 +333,7 @@ MonoBehaviour:
   sandScale: 4
   sandAmount: .400000006
   pitScale: 4
-  pitsAmount: .200000003
+  pitsAmount: .300000012
   startingTiles: []
   goalTiles: []
 --- !u!4 &1118868311

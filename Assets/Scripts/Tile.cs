@@ -40,7 +40,7 @@ public class Tile : MonoBehaviour
 	{
 		if (isPit) {
 			type = TileType.Pit;
-			GetComponent<SpriteRenderer> ().color = Color.red;
+			//GetComponent<SpriteRenderer> ().color = Color.red;
 		}
 	}
 
