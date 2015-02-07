@@ -74,7 +74,7 @@ public class Player : MonoBehaviour
 		{
 			directionInput = Vector2.right;
 		}
-#else
+#endif
 		if (playerIndex == PlayerIndex.One)
 		{
 			if (Input.GetAxis("Horizontal") < 0)
@@ -113,7 +113,6 @@ public class Player : MonoBehaviour
 				directionInput = -Vector2.up;
 			}
 		}
-		#endif
 
 		if (directionInput  == _previousDirectionInput || _moveTimer > 0) 
 		{
@@ -140,7 +139,8 @@ public class Player : MonoBehaviour
 			
 			if (targetTile.allowsFootsteps || currentTile.allowsFootsteps) 
 			{
-				Instantiate (footstepsPrefab, (coord + targetCoord) / 2, Quaternion.LookRotation (new Vector3 (0, 0, -1), currentDirection));
+				GameObject footsteps = (GameObject)Instantiate (footstepsPrefab, (coord + targetCoord) / 2, Quaternion.LookRotation (new Vector3 (0, 0, -1), currentDirection));
+				footsteps.transform.parent = tileMap.transform;
 			}
 			
 			transform.localPosition = targetCoord;

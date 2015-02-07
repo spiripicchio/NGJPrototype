@@ -41,6 +41,9 @@ TagManager:
   - name: Default
     uniqueID: 0
     locked: 0
+  - name: Footsteps
+    uniqueID: 2129448101
+    locked: 0
   - name: Players
     uniqueID: 3932579201
     locked: 0

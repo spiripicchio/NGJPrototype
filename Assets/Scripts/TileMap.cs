@@ -104,6 +104,9 @@ public class TileMap : MonoBehaviour
 			}
 		}
 
+		_tiles.ForEach (tile => {
+			tile.AutoTile(); });
+
 		// Add spawns
 		Tile leftSpawn = GetTileAt (1, Random.Range (1, mapHeight - 1));
 		Tile rightSpawn = GetTileAt (mapWidth - 2, Random.Range (1, mapHeight - 1)); 
@@ -119,6 +122,7 @@ public class TileMap : MonoBehaviour
 		return (IsPath (startingTiles[0], goalTiles[0]) && 
 			IsPath(startingTiles[1], goalTiles[1]));
 	}
+
 
 	public bool IsPath(Tile start, Tile end)
 	{
