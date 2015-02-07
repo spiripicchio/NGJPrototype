@@ -40,10 +40,16 @@ public class Game : MonoBehaviour
 				yield return null;
 			}
 
-			StopCoroutine(_resetPlayerOneCoroutine);
-			StopCoroutine(_resetPlayerTwoCoroutine);
-			_inCoroutineOne = false;
-			_inCoroutineTwo = false;
+			if (_inCoroutineOne == true)
+			{
+				StopCoroutine(_resetPlayerOneCoroutine);
+				_inCoroutineOne = false;
+			}
+			if (_inCoroutineTwo == true)
+			{
+				StopCoroutine(_resetPlayerTwoCoroutine);
+				_inCoroutineTwo = false;
+			}
 
 			ShowOutro();
 		}
@@ -57,6 +63,8 @@ public class Game : MonoBehaviour
 
 		ResetPlayer(playerOne);
 		ResetPlayer(playerTwo);
+		playerOne.lives = lives;
+		playerTwo.lives = lives;
 
 		playerOne.goalTile = tileMap.goalTiles[0];
 		playerTwo.goalTile = tileMap.goalTiles[1];
@@ -89,13 +97,13 @@ public class Game : MonoBehaviour
 			}
 			else
 			{
-				if (playerOne.isDead == true && _inCoroutineOne == false && playerOne.lives > 0)
+				if (playerOne.isDead == true && _inCoroutineOne == false && playerOne.lives > 1)
 				{
 					--playerOne.lives;
 					_resetPlayerOneCoroutine = ResetPlayerAndWait(playerOne);
 					StartCoroutine(_resetPlayerOneCoroutine);
 				}
-				if (playerTwo.isDead == true && _inCoroutineTwo == false && playerTwo.lives > 0)
+				if (playerTwo.isDead == true && _inCoroutineTwo == false && playerTwo.lives > 1)
 				{
 					--playerTwo.lives;
 					_resetPlayerTwoCoroutine = ResetPlayerAndWait(playerTwo);
@@ -119,12 +127,20 @@ public class Game : MonoBehaviour
 		yield return new WaitForSeconds(respawnCooldown);
 
 		ResetPlayer(player);
+
+		if (player.playerIndex == XInputDotNetPure.PlayerIndex.One)
+		{
+			_inCoroutineOne = false;
+		}
+		if (player.playerIndex == XInputDotNetPure.PlayerIndex.Two)
+		{
+			_inCoroutineTwo = false;
+		}
 	}
 
 	void ResetPlayer(Player player)
 	{
 		player.Reset();
 		player.SetStartingPosition(tileMap.startingTiles[(int)player.playerIndex].transform.localPosition);
-		player.lives = lives;
 	}
 }
