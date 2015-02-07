@@ -44,6 +44,10 @@ public class Game : MonoBehaviour
 		{
 			Reset();
 
+			tileMap.FadePits();
+
+			yield return new WaitForSeconds(5);
+
 			while (_winningPlayer == WinningPlayer.Unknown)
 			{
 				yield return null;

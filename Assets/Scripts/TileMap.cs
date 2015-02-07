@@ -122,8 +122,7 @@ public class TileMap : MonoBehaviour
 		return (IsPath (startingTiles[0], goalTiles[0]) && 
 			IsPath(startingTiles[1], goalTiles[1]));
 	}
-
-
+	
 	public bool IsPath(Tile start, Tile end)
 	{
 		_tiles.ForEach (tile => {
@@ -139,5 +138,13 @@ public class TileMap : MonoBehaviour
 	public Tile GetTileAt(int x, int y)
 	{
 		return _tiles[(y * mapWidth) + x];
+	}
+
+	public void FadePits()
+	{
+		foreach (Tile tile in _tiles)
+		{
+			tile.ShowPit();
+		}
 	}
 }
