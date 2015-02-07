@@ -22,8 +22,13 @@ public class Player : MonoBehaviour
 	public GameObject footstepsPrefab;
 
 	public TileMap tileMap;
+
+	[HideInInspector]
 	public bool isDead;
+	[HideInInspector]
 	public bool reachedGoal;
+	[HideInInspector]
+	public Tile goalTile;
 
 	float _moveTimer;
 	Vector2 _previousDirectionInput;
@@ -122,6 +127,12 @@ public class Player : MonoBehaviour
 			GetComponent<SpriteRenderer> ().color = Color.red;
 			isDead = true;
 		}
+	}
+
+	public void SetStartingPosition(Vector2 position)
+	{
+		transform.localPosition = position;
+		coord = position;
 	}
 
 	void CheckDanger(Vector2 atCoord)

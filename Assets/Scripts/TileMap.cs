@@ -38,16 +38,20 @@ public class TileMap : MonoBehaviour
 		Generate ();
 	}
 
-	void Generate (){
+	public void Generate ()
+	{
 		StartCoroutine (GenerateCoroutine ());
 	}
 
-	IEnumerator GenerateCoroutine () {
+	IEnumerator GenerateCoroutine () 
+	{
 		int attempts = 10;
-		while (attempts -- > 0) {
+		while (attempts -- > 0) 
+		{
 			bool success = GenerateAttempt ();
 
-			if (success) {
+			if (success) 
+			{
 				Debug.Log ("Success!!");
 				yield break;
 			}
@@ -59,7 +63,8 @@ public class TileMap : MonoBehaviour
 	bool GenerateAttempt()
 	{
 		// Destroy tiles.
-		foreach (Transform child in transform) {
+		foreach (Transform child in transform) 
+		{
 			Destroy (child.gameObject);
 		}
 		_tiles = new List<Tile>();

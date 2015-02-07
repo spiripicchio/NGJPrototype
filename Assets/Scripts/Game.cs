@@ -46,6 +46,14 @@ public class Game : MonoBehaviour
 	void ShowIntro()
 	{
 		_winningPlayer = WinningPlayer.Unknown;
+
+		tileMap.Generate();
+
+		ResetPlayer(playerOne);
+		ResetPlayer(playerTwo);
+
+		playerOne.goalTile = tileMap.goalTiles[0];
+		playerTwo.goalTile = tileMap.goalTiles[1];
 	}
 
 	void ShowOutro()
@@ -75,23 +83,27 @@ public class Game : MonoBehaviour
 		{
 			if (playerOne.isDead == true)
 			{
-				_resetPlayerOneCoroutine = ResetPlayer(playerOne);
+				_resetPlayerOneCoroutine = ResetPlayerAndWait(playerOne);
 				StartCoroutine(_resetPlayerOneCoroutine);
 			}
 			if (playerTwo.isDead == true)
 			{
-				_resetPlayerTwoCoroutine = ResetPlayer(playerTwo);
+				_resetPlayerTwoCoroutine = ResetPlayerAndWait(playerTwo);
 				StartCoroutine(_resetPlayerTwoCoroutine);
 			}
 		}
 	}
 
-	IEnumerator ResetPlayer(Player player)
+	IEnumerator ResetPlayerAndWait(Player player)
 	{
 		yield return new WaitForSeconds(5);
 
-		player.Reset();
+		ResetPlayer(player);
+	}
 
-		// Starting location
+	void ResetPlayer(Player player)
+	{
+		player.Reset();
+		player.SetStartingPosition(tileMap.startingTiles[(int)player.playerIndex].transform.localPosition);
 	}
 }
