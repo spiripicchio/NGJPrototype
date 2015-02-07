@@ -325,6 +325,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 30e634074a55740f0a9058f5a52de49e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  game: {fileID: 1992572106}
   tilePrefab: {fileID: 11478512, guid: 8f7ea3a039e154129866148314d08ea7, type: 2}
   footstepsPrefab: {fileID: 142238, guid: 99544b5aa19b045138a13c2f39ef28ca, type: 2}
   mapWidth: 18

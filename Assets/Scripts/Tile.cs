@@ -21,6 +21,8 @@ public class Tile : MonoBehaviour
 	[HideInInspector]
 	public bool visited = false;
 
+	public Player goalFor;
+
 	public void Awake()
 	{
 		_neighbors = new List<Tile> ();
@@ -45,6 +47,13 @@ public class Tile : MonoBehaviour
 			//GetComponent<SpriteRenderer> ().color = Color.red;
 		}
 	}
+
+	public void SetGoalForPlayer(Player player)
+	{
+		goalFor = player;
+		GetComponent<SpriteRenderer> ().color = Color.blue;
+	}
+
 
 	public void AddNeighbors(Tile neighbor)
 	{
