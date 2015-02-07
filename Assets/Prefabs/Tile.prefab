@@ -44,6 +44,7 @@ MonoBehaviour:
   sandSprite: {fileID: 21300000, guid: 6258e2fe0101840c6b431fb002739ae6, type: 3}
   type: 0
   allowsFootsteps: 0
+  visited: 0
 --- !u!212 &21227128
 SpriteRenderer:
   m_ObjectHideFlags: 1
