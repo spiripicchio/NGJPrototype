@@ -3,9 +3,8 @@ using System.Collections;
 using XInputDotNetPure; // Required in C#
 
 
-
-public class Player : MonoBehaviour {
-
+public class Player : MonoBehaviour 
+{
 	public PlayerIndex playerIndex;
 
 	public Vector2 currentDirection = Vector2.right;
@@ -24,37 +23,63 @@ public class Player : MonoBehaviour {
 
 	public TileMap tileMap;
 
-	float moveTimer;
-	Vector2 previousDirectionInput;
-	bool vibrating;
-
-	GamePadState gamepad;
+	float _moveTimer;
+	Vector2 _previousDirectionInput;
+	bool _vibrating;
 
 	// Use this for initialization
-	void Start () {
+	void Start() 
+	{
 		RotateTo (currentDirection);
 		transform.localPosition = new Vector3(coord.x, coord.y, -1)	;
 	}
 
 	Vector2 GetDirectionInput()
 	{
-		moveTimer -= Time.deltaTime;
+		_moveTimer -= Time.deltaTime;
 		Vector2 directionInput = Vector2.zero;
-		if (gamepad.DPad.Up == ButtonState.Pressed) {
+
+#if UNITY_STANDALONE_WIN
+		GamePadState gamepad = GamePad.GetState (playerIndex);
+		if (gamepad.DPad.Up == ButtonState.Pressed) 
+		{
 			directionInput = Vector2.up;
-		} else if (gamepad.DPad.Down == ButtonState.Pressed) {
+		} else if (gamepad.DPad.Down == ButtonState.Pressed) 
+		{
 			directionInput = -Vector2.up;
-		} else if (gamepad.DPad.Left == ButtonState.Pressed) {
+		} else if (gamepad.DPad.Left == ButtonState.Pressed) 
+		{
 			directionInput = -Vector2.right;
-		} else if (gamepad.DPad.Right == ButtonState.Pressed) {
+		} else if (gamepad.DPad.Right == ButtonState.Pressed) 
+		{
 			directionInput = Vector2.right;
 		}
+#else
+		if (Input.GetAxis("Horizontal") < 0)
+		{
+			directionInput = -Vector2.right;
+		}
+		if (Input.GetAxis("Horizontal") > 0)
+		{
+			directionInput = Vector2.right;
+		}
+		if (Input.GetAxis("Vertical") > 0)
+		{
+			directionInput = Vector2.up;
+		}
+		if (Input.GetAxis("Vertical") < 0)
+		{
+			directionInput = -Vector2.up;
+		}
+#endif
 
-		if (directionInput  == previousDirectionInput || moveTimer > 0) {
+		if (directionInput  == _previousDirectionInput || _moveTimer > 0) 
+		{
 			return Vector2.zero;
 		}
-		moveTimer = moveCooldown;
-		previousDirectionInput = directionInput;
+		_moveTimer = moveCooldown;
+		_previousDirectionInput = directionInput;
+
 		return directionInput;
 	}
 
@@ -88,7 +113,8 @@ public class Player : MonoBehaviour {
 		bool danger = targetTile.type == Tile.TileType.Pit;
 
 		//targetTile.GetComponent<SpriteRenderer> ().color = new Color(Random.value * .2f,Random.value * .5f, 1);
-		if (danger) {
+		if (danger) 
+		{
 			receivingPlayer.HearDanger ();
 		}
 	}
@@ -100,19 +126,24 @@ public class Player : MonoBehaviour {
 
 	IEnumerator HearDangerCoroutine()
 	{
-		vibrating = true;
+		_vibrating = true;
+#if UNITY_STANDALONE_WIN
 		GamePad.SetVibration (playerIndex, vibrateStrengthLeft, vibrateStrengthRight);
-
+#else
+		Debug.Log("BBBBRRRRRR\n");
+#endif
 		yield return new WaitForSeconds (vibrateDuration);
-		vibrating = false;
+		_vibrating = false;
+#if UNITY_STANDALONE_WIN
 		GamePad.SetVibration (playerIndex, 0, 0);
+#else
+		Debug.Log("Done\n");
+#endif
 	}
 	
 	// Update is called once per frame
-	void Update () {
-		// update state once per frame;
-		gamepad = GamePad.GetState (playerIndex);
-
+	void Update () 
+	{
 		Vector2 dir = GetDirectionInput ();
 
 		if (dir.sqrMagnitude > 0) {
@@ -129,7 +160,7 @@ public class Player : MonoBehaviour {
 		}
 
 		// Update vibration
-		if (vibrating) {
+		if (_vibrating) {
 			//GamePad.SetVibration (playerIndex, vibrateStrengthLeft, vibrateStrengthRight);
 		}
 	}
