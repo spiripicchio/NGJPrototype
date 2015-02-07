@@ -197,6 +197,18 @@ Prefab:
       propertyPath: receivingPlayer
       value: 
       objectReference: {fileID: 760663467}
+    - target: {fileID: 11425150, guid: d40517c7ff1f2704d90dafcb645484fd, type: 2}
+      propertyPath: vibrateStrengthLeft
+      value: .400000006
+      objectReference: {fileID: 0}
+    - target: {fileID: 11425150, guid: d40517c7ff1f2704d90dafcb645484fd, type: 2}
+      propertyPath: vibrateDuration
+      value: .5
+      objectReference: {fileID: 0}
+    - target: {fileID: 11425150, guid: d40517c7ff1f2704d90dafcb645484fd, type: 2}
+      propertyPath: footstepsPrefab
+      value: 
+      objectReference: {fileID: 142238, guid: 99544b5aa19b045138a13c2f39ef28ca, type: 2}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: d40517c7ff1f2704d90dafcb645484fd, type: 2}
   m_IsPrefabParent: 0
@@ -271,6 +283,18 @@ Prefab:
       propertyPath: playerIndex
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 11425150, guid: d40517c7ff1f2704d90dafcb645484fd, type: 2}
+      propertyPath: vibrateStrengthLeft
+      value: .400000006
+      objectReference: {fileID: 0}
+    - target: {fileID: 11425150, guid: d40517c7ff1f2704d90dafcb645484fd, type: 2}
+      propertyPath: vibrateDuration
+      value: .5
+      objectReference: {fileID: 0}
+    - target: {fileID: 11425150, guid: d40517c7ff1f2704d90dafcb645484fd, type: 2}
+      propertyPath: footstepsPrefab
+      value: 
+      objectReference: {fileID: 142238, guid: 99544b5aa19b045138a13c2f39ef28ca, type: 2}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: d40517c7ff1f2704d90dafcb645484fd, type: 2}
   m_IsPrefabParent: 0

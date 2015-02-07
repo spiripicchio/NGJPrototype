@@ -20,6 +20,7 @@ public class Player : MonoBehaviour {
 	public float vibrateDuration = 1.0f;
 
 	public Player receivingPlayer;
+	public GameObject footstepsPrefab;
 
 	public TileMap tileMap;
 
@@ -65,11 +66,17 @@ public class Player : MonoBehaviour {
 
 	void MoveTo(Vector2 targetCoord)
 	{
-		coord = targetCoord;
-		transform.localPosition = targetCoord;
+		Tile targetTile = tileMap.GetTileAt (targetCoord);
+		Tile currentTile = tileMap.GetTileAt (coord);
 
-		Tile newTile = tileMap.GetTileAt (targetCoord);
-		if (newTile.type == Tile.TileType.Pit) {
+		if (targetTile.allowsFootsteps || currentTile.allowsFootsteps) {
+			Instantiate (footstepsPrefab, (coord + targetCoord) / 2, Quaternion.LookRotation (new Vector3 (0, 0, -1), currentDirection));
+		}
+
+		transform.localPosition = targetCoord;
+		coord = targetCoord;
+
+		if (targetTile.type == Tile.TileType.Pit) {
 			GetComponent<SpriteRenderer> ().color = Color.red;
 		}
 	}
