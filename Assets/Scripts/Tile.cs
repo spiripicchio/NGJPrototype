@@ -16,7 +16,9 @@ public class Tile : MonoBehaviour
 	public bool allowsFootsteps;
 
 	List<Tile> _neighbors;
-	bool _visited = false;
+
+	[HideInInspector]
+	public bool visited = false;
 
 	public void Awake()
 	{
@@ -58,8 +60,8 @@ public class Tile : MonoBehaviour
 		if (this == target) {
 			return true;
 		}
-		if (!_visited) {
-			_visited = true;
+		if (!visited) {
+			visited = true;
 			foreach (Tile neighbor in _neighbors) {
 				if (!neighbor.IsDeadly() && neighbor.CanReachTile(target))
 				{

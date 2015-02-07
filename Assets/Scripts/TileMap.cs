@@ -46,10 +46,12 @@ public class TileMap : MonoBehaviour
 		int attempts = 10;
 		while (attempts -- > 0) {
 			bool success = GenerateAttempt ();
+
 			if (success) {
-				yield return null;
+				Debug.Log ("Success!!");
+				yield break;
 			}
-			yield return new WaitForSeconds(2.0f);
+			//yield return new WaitForSeconds(2.0f);
 		}
 		Debug.LogError ("Failed to generate map");
 	}
@@ -104,8 +106,17 @@ public class TileMap : MonoBehaviour
 		goalTiles.Add (GetTileAt (right, lo));
 		goalTiles.Add (GetTileAt (left, lo));
 
-		return (startingTiles [0].CanReachTile (goalTiles [0]) && 
-			startingTiles [1].CanReachTile (goalTiles [1]));
+		return (IsPath (startingTiles[0], goalTiles[0]) && 
+			IsPath(startingTiles[1], goalTiles[1]));
+	}
+
+	public bool IsPath(Tile start, Tile end)
+	{
+		_tiles.ForEach (tile => {
+			tile.visited = false; });
+		bool path = start.CanReachTile (end);
+		Debug.Log (start.transform.localPosition + "," + end.transform.localPosition + "::" + path); 
+		return path;
 	}
 
 
