@@ -62,7 +62,7 @@ public class Game : MonoBehaviour
 			{
 				case WinningPlayer.PlayerOne:
 				{
-					outroMessage.text = "PLAYER ONE WINS!";
+					outroMessage.text = "Player One Wins!";
 					++_score1;
 					score1Text.text = _score1.ToString();
 					break;
@@ -70,7 +70,7 @@ public class Game : MonoBehaviour
 
 				case WinningPlayer.PlayerTwo:
 				{
-					outroMessage.text = "PLAYER TWO WINS!";
+					outroMessage.text = "Player Two Wins!";
 					++_score2;
 					score2Text.text = _score2.ToString();
 					break;
@@ -78,7 +78,7 @@ public class Game : MonoBehaviour
 
 				case WinningPlayer.None:
 				{
-					outroMessage.text = "FAIL!";
+					outroMessage.text = "Everyone Loses!";
 					break;
 				}
 			}

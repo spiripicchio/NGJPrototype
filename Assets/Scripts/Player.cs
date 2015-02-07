@@ -137,7 +137,8 @@ public class Player : MonoBehaviour
 			
 			if (targetTile.allowsFootsteps || currentTile.allowsFootsteps) 
 			{
-				Instantiate (footstepsPrefab, (coord + targetCoord) / 2, Quaternion.LookRotation (new Vector3 (0, 0, -1), currentDirection));
+				GameObject footsteps = (GameObject)Instantiate (footstepsPrefab, (coord + targetCoord) / 2, Quaternion.LookRotation (new Vector3 (0, 0, -1), currentDirection));
+				footsteps.transform.parent = tileMap.transform;
 			}
 			
 			transform.localPosition = targetCoord;

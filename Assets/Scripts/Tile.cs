@@ -68,13 +68,16 @@ public class Tile : MonoBehaviour
 
 	public bool CanReachTile(Tile target)
 	{
+		if (IsDeadly () || isObstacle) {
+			return false;
+		}
 		if (this == target) {
 			return true;
 		}
 		if (!visited) {
 			visited = true;
 			foreach (Tile neighbor in _neighbors) {
-				if (!neighbor.IsDeadly() && neighbor.CanReachTile(target))
+				if (neighbor.CanReachTile(target))
 				{
 					return true;
 				}
