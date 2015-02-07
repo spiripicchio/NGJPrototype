@@ -72,10 +72,7 @@ public class TileMap : MonoBehaviour
 
 		seed = Random.value;
 
-		int hi = (mapHeight) / 2;
-		int lo = mapHeight / 2 - 1;
-		int left = 0;
-		int right = mapWidth - 1;
+
 
 		for (int y = 0; y < mapHeight; ++y)
 		{
@@ -104,11 +101,14 @@ public class TileMap : MonoBehaviour
 		}
 
 		// Add spawns
-
-		startingTiles.Add( GetTileAt(left, hi ));
-		startingTiles.Add( GetTileAt(right, hi ));
-		goalTiles.Add (GetTileAt (right, lo));
-		goalTiles.Add (GetTileAt (left, lo));
+		int leftSpawn = Random.Range (0, mapHeight);
+		int rightSpawn = Random.Range (0, mapHeight);
+		int left = 0;
+		int right = mapWidth - 1;
+		startingTiles.Add( GetTileAt(left, leftSpawn ));
+		startingTiles.Add( GetTileAt(right, rightSpawn ));
+		goalTiles.Add (GetTileAt (right, rightSpawn));
+		goalTiles.Add (GetTileAt (left, leftSpawn));
 
 		return (IsPath (startingTiles[0], goalTiles[0]) && 
 			IsPath(startingTiles[1], goalTiles[1]));
