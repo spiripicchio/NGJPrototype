@@ -1,5 +1,5 @@
 ﻿using UnityEngine;
-using System.Collections;
+using System.Collections.Generic;
 
 public class Tile : MonoBehaviour 
 {
@@ -14,6 +14,14 @@ public class Tile : MonoBehaviour
 
 	public TileType type = TileType.Normal;
 	public bool allowsFootsteps;
+
+	List<Tile> _neighbors;
+	bool _visited = false;
+
+	public void Awake()
+	{
+		_neighbors = new List<Tile> ();
+	}
 
 	public void SetFootsteps(bool allow) 
 	{
@@ -30,8 +38,35 @@ public class Tile : MonoBehaviour
 	{
 		if (isPit) {
 			type = TileType.Pit;
-			//GetComponent<SpriteRenderer> ().color = Color.red;
+			GetComponent<SpriteRenderer> ().color = Color.red;
 		}
+	}
 
+	public void AddNeighbors(Tile neighbor)
+	{
+		_neighbors.Add (neighbor);
+		neighbor._neighbors.Add (this);
+	}
+
+	public bool IsDeadly()
+	{
+		return type == TileType.Pit;
+	}
+
+	public bool CanReachTile(Tile target)
+	{
+		if (this == target) {
+			return true;
+		}
+		if (!_visited) {
+			_visited = true;
+			foreach (Tile neighbor in _neighbors) {
+				if (!neighbor.IsDeadly() && neighbor.CanReachTile(target))
+				{
+					return true;
+				}
+			}
+		}
+		return false;
 	}
 }
