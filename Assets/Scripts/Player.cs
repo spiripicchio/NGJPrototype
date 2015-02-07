@@ -31,6 +31,8 @@ public class Player : MonoBehaviour
 	public Tile goalTile;
 	public int lives;
 
+	public AudioClip sound1;
+
 	float _moveTimer;
 	Vector2 _previousDirectionInput;
 	bool _vibrating;
@@ -153,6 +155,10 @@ public class Player : MonoBehaviour
 			{
 				GetComponent<SpriteRenderer> ().color = Color.green;
 				reachedGoal = true;
+			}
+			else
+			{
+//				AudioSource.PlayClipAtPoint(sound1, Vector3.zero);
 			}
 		}
 	}
