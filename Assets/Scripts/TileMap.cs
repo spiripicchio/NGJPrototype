@@ -4,6 +4,7 @@ using System.Collections.Generic;
 
 public class TileMap : MonoBehaviour 
 {
+	public Game game;
 	public Tile tilePrefab;
 	public GameObject footstepsPrefab;
 	public int mapWidth;
@@ -101,14 +102,16 @@ public class TileMap : MonoBehaviour
 		}
 
 		// Add spawns
-		int leftSpawn = Random.Range (0, mapHeight);
-		int rightSpawn = Random.Range (0, mapHeight);
-		int left = 0;
-		int right = mapWidth - 1;
-		startingTiles.Add( GetTileAt(left, leftSpawn ));
-		startingTiles.Add( GetTileAt(right, rightSpawn ));
-		goalTiles.Add (GetTileAt (right, rightSpawn));
-		goalTiles.Add (GetTileAt (left, leftSpawn));
+		Tile leftSpawn = GetTileAt (0, Random.Range (0, mapHeight));
+		Tile rightSpawn = GetTileAt (mapWidth - 1, Random.Range (0, mapHeight)); 
+
+		startingTiles.Add( leftSpawn );
+		startingTiles.Add( rightSpawn );
+		goalTiles.Add ( rightSpawn );
+		goalTiles.Add ( leftSpawn );
+
+		leftSpawn.SetGoalForPlayer (game.playerTwo);
+		rightSpawn.SetGoalForPlayer (game.playerOne);
 
 		return (IsPath (startingTiles[0], goalTiles[0]) && 
 			IsPath(startingTiles[1], goalTiles[1]));
