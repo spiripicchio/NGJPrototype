@@ -26,27 +26,38 @@ public class Player : MonoBehaviour
 	[HideInInspector]
 	public bool isDead;
 	[HideInInspector]
+	public bool isEnabled;
+	[HideInInspector]
 	public bool reachedGoal;
 	[HideInInspector]
 	public Tile goalTile;
 	public int lives;
 
-	public AudioClip sound1;
+	public AudioClip swoop1;
+	public AudioClip swoop2;
+	public AudioClip fellDown1;
+	public AudioClip fellDown2;
 
 	float _moveTimer;
 	Vector2 _previousDirectionInput;
 	bool _vibrating;
+	AudioClip _swoop;
 
 	// Use this for initialization
 	void Start() 
 	{
-		RotateTo (currentDirection);
-		transform.localPosition = new Vector3(coord.x, coord.y, -1)	;
+		_swoop = (playerIndex == PlayerIndex.One) ? swoop1 : swoop2;
+
+		RotateTo(currentDirection);
+		transform.localPosition = new Vector3(coord.x, coord.y, -1);
+
+		isEnabled = true;
 	}
 
 	public void Reset()
 	{
 		isDead = false;
+		isEnabled = true;
 		reachedGoal = false;
 		_moveTimer = 0;
 		_previousDirectionInput = Vector2.zero;
@@ -127,7 +138,9 @@ public class Player : MonoBehaviour
 	void RotateTo(Vector2 direction)
 	{
 		currentDirection = direction;
-		transform.localRotation = Quaternion.LookRotation (new Vector3(0,0,-1), direction);
+		transform.localRotation = Quaternion.LookRotation(new Vector3(0,0,-1), direction);
+
+		AudioSource.PlayClipAtPoint(_swoop, Vector3.zero);
 	}
 
 	void MoveTo(Vector2 targetCoord)
@@ -150,6 +163,8 @@ public class Player : MonoBehaviour
 			{
 				GetComponent<SpriteRenderer> ().color = Color.red;
 				isDead = true;
+
+				AudioSource.PlayClipAtPoint(Random.Range(0, 2) == 0 ? fellDown1 : fellDown2, Vector3.zero);
 			}
 			else if (targetTile == goalTile)
 			{
@@ -158,7 +173,7 @@ public class Player : MonoBehaviour
 			}
 			else
 			{
-//				AudioSource.PlayClipAtPoint(sound1, Vector3.zero);
+				AudioSource.PlayClipAtPoint(_swoop, Vector3.zero);
 			}
 		}
 	}
@@ -210,7 +225,7 @@ public class Player : MonoBehaviour
 	// Update is called once per frame
 	void Update () 
 	{
-		if (isDead == false)
+		if (isDead == false && isEnabled == true)
 		{
 			Vector2 dir = GetDirectionInput();
 			

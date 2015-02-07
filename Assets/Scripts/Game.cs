@@ -12,6 +12,9 @@ public class Game : MonoBehaviour
 	public Text outroMessage;
 	public Text score1Text;
 	public Text score2Text;
+	public AudioClip lost1;
+	public AudioClip lost2;
+	public AudioClip winRound;
 
 	enum WinningPlayer
 	{
@@ -57,6 +60,8 @@ public class Game : MonoBehaviour
 				_inCoroutineTwo = false;
 			}
 
+			yield return new WaitForSeconds(1.5f);
+
 			// Outro
 			switch (_winningPlayer)
 			{
@@ -65,6 +70,8 @@ public class Game : MonoBehaviour
 					outroMessage.text = "Player One Wins!";
 					++_score1;
 					score1Text.text = _score1.ToString();
+
+					AudioSource.PlayClipAtPoint(winRound, Vector3.zero);
 					break;
 				}
 
@@ -73,15 +80,22 @@ public class Game : MonoBehaviour
 					outroMessage.text = "Player Two Wins!";
 					++_score2;
 					score2Text.text = _score2.ToString();
+
+					AudioSource.PlayClipAtPoint(winRound, Vector3.zero);
 					break;
 				}
 
 				case WinningPlayer.None:
 				{
 					outroMessage.text = "Everyone Loses!";
+
+					AudioSource.PlayClipAtPoint(Random.Range(0, 2) == 0 ? lost1 : lost2, Vector3.zero);
 					break;
 				}
 			}
+
+			playerOne.isEnabled = false;
+			playerTwo.isEnabled = false;
 
 			yield return new WaitForSeconds(5);
 		}
@@ -119,17 +133,14 @@ public class Game : MonoBehaviour
 		{
 			if (playerOne.isDead == true && playerTwo.isDead == true)
 			{
-				Debug.Log("Game over\n");
 				_winningPlayer = WinningPlayer.None;
 			}
 			else if (playerOne.reachedGoal == true)
 			{
-				Debug.Log("Won 1\n");
 				_winningPlayer = WinningPlayer.PlayerOne; 
 			}
 			else if (playerTwo.reachedGoal == true)
 			{
-				Debug.Log("Won 2\n");
 				_winningPlayer = WinningPlayer.PlayerTwo; 
 			}
 			else
