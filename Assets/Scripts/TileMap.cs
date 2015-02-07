@@ -36,20 +36,20 @@ public class TileMap : MonoBehaviour
 	// Use this for initialization
 	void Start() 
 	{
-		Generate ();
+		Generate();
 	}
 
-	public void Generate ()
+	public void Generate()
 	{
 		StartCoroutine (GenerateCoroutine ());
 	}
 
-	IEnumerator GenerateCoroutine () 
+	IEnumerator GenerateCoroutine() 
 	{
 		int attempts = 10;
 		while (attempts -- > 0) 
 		{
-			bool success = GenerateAttempt ();
+			bool success = GenerateAttempt();
 
 			if (success) 
 			{
@@ -73,8 +73,6 @@ public class TileMap : MonoBehaviour
 
 		seed = Random.value;
 
-
-
 		for (int y = 0; y < mapHeight; ++y)
 		{
 			for (int x = 0; x < mapWidth; ++x)
@@ -87,6 +85,11 @@ public class TileMap : MonoBehaviour
 
 				float perlinPit = Mathf.PerlinNoise(x / pitScale + (seed - .5f) * 1000000, y / pitScale);
 				tile.SetPit(perlinPit < pitsAmount);
+
+				if (x == 0 || y == 0 || x == (mapWidth - 1) || y == (mapHeight - 1))
+				{
+					tile.isObstacle = true;
+				}
 				
 				_tiles.Add(tile);
 
@@ -105,8 +108,8 @@ public class TileMap : MonoBehaviour
 			tile.AutoTile(); });
 
 		// Add spawns
-		Tile leftSpawn = GetTileAt (0, Random.Range (0, mapHeight));
-		Tile rightSpawn = GetTileAt (mapWidth - 1, Random.Range (0, mapHeight)); 
+		Tile leftSpawn = GetTileAt (1, Random.Range (1, mapHeight - 1));
+		Tile rightSpawn = GetTileAt (mapWidth - 2, Random.Range (1, mapHeight - 1)); 
 
 		startingTiles.Add( leftSpawn );
 		startingTiles.Add( rightSpawn );
@@ -125,11 +128,9 @@ public class TileMap : MonoBehaviour
 	{
 		_tiles.ForEach (tile => {
 			tile.visited = false; });
-		bool path = start.CanReachTile (end);
-		return path;
+		return start.CanReachTile(end);
 	}
-
-
+	
 	public Tile GetTileAt(Vector2 coord)
 	{
 		return GetTileAt(Mathf.FloorToInt(coord.x), Mathf.FloorToInt(coord.y));

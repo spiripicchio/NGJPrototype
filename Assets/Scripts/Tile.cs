@@ -5,6 +5,7 @@ public class Tile : MonoBehaviour
 {
 	public Sprite defaultSprite;
 	public List<Sprite> snowTiles;
+	public bool isObstacle;
 
 	public enum TileType
 	{

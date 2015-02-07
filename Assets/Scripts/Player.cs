@@ -92,6 +92,25 @@ public class Player : MonoBehaviour
 				directionInput = -Vector2.up;
 			}
 		}
+		else
+		{
+			if (Input.GetAxis("Horizontal2") < 0)
+			{
+				directionInput = -Vector2.right;
+			}
+			if (Input.GetAxis("Horizontal2") > 0)
+			{
+				directionInput = Vector2.right;
+			}
+			if (Input.GetAxis("Vertical2") > 0)
+			{
+				directionInput = Vector2.up;
+			}
+			if (Input.GetAxis("Vertical2") < 0)
+			{
+				directionInput = -Vector2.up;
+			}
+		}
 
 		if (directionInput  == _previousDirectionInput || _moveTimer > 0) 
 		{
@@ -112,25 +131,28 @@ public class Player : MonoBehaviour
 	void MoveTo(Vector2 targetCoord)
 	{
 		Tile targetTile = tileMap.GetTileAt (targetCoord);
-		Tile currentTile = tileMap.GetTileAt (coord);
-
-		if (targetTile.allowsFootsteps || currentTile.allowsFootsteps) 
+		if (targetTile.isObstacle == false)
 		{
-			Instantiate (footstepsPrefab, (coord + targetCoord) / 2, Quaternion.LookRotation (new Vector3 (0, 0, -1), currentDirection));
-		}
-
-		transform.localPosition = targetCoord;
-		coord = targetCoord;
-
-		if (targetTile.IsDeadly()) 
-		{
-			GetComponent<SpriteRenderer> ().color = Color.red;
-			isDead = true;
-		}
-		else if (targetTile == goalTile)
-		{
-			GetComponent<SpriteRenderer> ().color = Color.green;
-			reachedGoal = true;
+			Tile currentTile = tileMap.GetTileAt (coord);
+			
+			if (targetTile.allowsFootsteps || currentTile.allowsFootsteps) 
+			{
+				Instantiate (footstepsPrefab, (coord + targetCoord) / 2, Quaternion.LookRotation (new Vector3 (0, 0, -1), currentDirection));
+			}
+			
+			transform.localPosition = targetCoord;
+			coord = targetCoord;
+			
+			if (targetTile.IsDeadly()) 
+			{
+				GetComponent<SpriteRenderer> ().color = Color.red;
+				isDead = true;
+			}
+			else if (targetTile == goalTile)
+			{
+				GetComponent<SpriteRenderer> ().color = Color.green;
+				reachedGoal = true;
+			}
 		}
 	}
 
@@ -143,13 +165,16 @@ public class Player : MonoBehaviour
 	void CheckDanger(Vector2 atCoord)
 	{
 		//Debug.Log (atCoord);
-		Tile targetTile = tileMap.GetTileAt (atCoord);
-		bool danger = targetTile.type == Tile.TileType.Pit;
-
-		//targetTile.GetComponent<SpriteRenderer> ().color = new Color(Random.value * .2f,Random.value * .5f, 1);
-		if (danger) 
+		Tile targetTile = tileMap.GetTileAt(atCoord);
+		if (targetTile.isObstacle == false)
 		{
-			receivingPlayer.HearDanger ();
+			bool danger = targetTile.type == Tile.TileType.Pit;
+			
+			//targetTile.GetComponent<SpriteRenderer> ().color = new Color(Random.value * .2f,Random.value * .5f, 1);
+			if (danger) 
+			{
+				receivingPlayer.HearDanger();
+			}
 		}
 	}
 
