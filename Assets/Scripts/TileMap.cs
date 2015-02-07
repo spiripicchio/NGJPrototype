@@ -52,7 +52,6 @@ public class TileMap : MonoBehaviour
 
 			if (success) 
 			{
-				Debug.Log ("Success!!");
 				yield break;
 			}
 			//yield return new WaitForSeconds(2.0f);
@@ -120,14 +119,13 @@ public class TileMap : MonoBehaviour
 		_tiles.ForEach (tile => {
 			tile.visited = false; });
 		bool path = start.CanReachTile (end);
-		Debug.Log (start.transform.localPosition + "," + end.transform.localPosition + "::" + path); 
 		return path;
 	}
 
 
 	public Tile GetTileAt(Vector2 coord)
 	{
-		return GetTileAt(Mathf.FloorToInt(coord.y), Mathf.FloorToInt(coord.x));
+		return GetTileAt(Mathf.FloorToInt(coord.x), Mathf.FloorToInt(coord.y));
 	}
 
 	public Tile GetTileAt(int x, int y)
