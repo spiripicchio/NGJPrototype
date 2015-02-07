@@ -33,7 +33,7 @@ public class Tile : MonoBehaviour
 			GetComponent<SpriteRenderer> ().sprite = sandSprite;
 		} else {
 			GetComponent<SpriteRenderer> ().sprite = defaultSprite;
-			GetComponent<SpriteRenderer> ().color = new Color(0,0,0,0);
+			//GetComponent<SpriteRenderer> ().color = new Color(0,0,0,0);
 		}
 	}
 

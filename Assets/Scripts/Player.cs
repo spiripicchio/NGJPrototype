@@ -29,7 +29,6 @@ public class Player : MonoBehaviour
 	public bool reachedGoal;
 	[HideInInspector]
 	public Tile goalTile;
-	[HideInInspector]
 	public int lives;
 
 	float _moveTimer;
@@ -124,7 +123,7 @@ public class Player : MonoBehaviour
 		transform.localPosition = targetCoord;
 		coord = targetCoord;
 
-		if (targetTile.type == Tile.TileType.Pit) 
+		if (targetTile.IsDeadly()) 
 		{
 			GetComponent<SpriteRenderer> ().color = Color.red;
 			isDead = true;
