@@ -5,6 +5,7 @@ public class Tile : MonoBehaviour
 {
 	public Sprite defaultSprite;
 	public Sprite sandSprite;
+	public bool isObstacle;
 
 	public enum TileType
 	{
