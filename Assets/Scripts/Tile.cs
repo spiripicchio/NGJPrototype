@@ -11,6 +11,7 @@ public class Tile : MonoBehaviour
 	}
 
 	public TileType type;
+	public bool allowsFootsteps;
 
 	// Use this for initialization
 	void Start() 
