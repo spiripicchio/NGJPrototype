@@ -23,16 +23,13 @@ public class TileMap : MonoBehaviour
 
 	List<Tile> _tiles;
 
-	//[HideInInspector]
+	[HideInInspector]
 	public List<Tile> startingTiles;
 
-	//[HideInInspector]
+	[HideInInspector]
 	public List<Tile> goalTiles;
 
 
-	void Awake()
-	{
-	}
 	// Use this for initialization
 	void Start() 
 	{
@@ -41,13 +38,13 @@ public class TileMap : MonoBehaviour
 
 	public void Generate()
 	{
-		StartCoroutine (GenerateCoroutine ());
+		StartCoroutine(GenerateCoroutine ());
 	}
 
 	IEnumerator GenerateCoroutine() 
 	{
 		int attempts = 10;
-		while (attempts -- > 0) 
+		while (attempts-- > 0) 
 		{
 			bool success = GenerateAttempt();
 
@@ -68,8 +65,8 @@ public class TileMap : MonoBehaviour
 			Destroy (child.gameObject);
 		}
 		_tiles = new List<Tile>();
-		startingTiles = new List<Tile> ();
-		goalTiles = new List<Tile> ();
+		startingTiles = new List<Tile>();
+		goalTiles = new List<Tile>();
 
 		seed = Random.value;
 
@@ -108,18 +105,18 @@ public class TileMap : MonoBehaviour
 			tile.AutoTile(); });
 
 		// Add spawns
-		Tile leftSpawn = GetTileAt (1, Random.Range (1, mapHeight - 1));
-		Tile rightSpawn = GetTileAt (mapWidth - 2, Random.Range (1, mapHeight - 1)); 
+		Tile leftSpawn = GetTileAt(1, Random.Range(1, mapHeight - 1));
+		Tile rightSpawn = GetTileAt(mapWidth - 2, Random.Range(1, mapHeight - 1)); 
 
-		startingTiles.Add( leftSpawn );
-		startingTiles.Add( rightSpawn );
-		goalTiles.Add ( rightSpawn );
-		goalTiles.Add ( leftSpawn );
+		startingTiles.Add(leftSpawn);
+		startingTiles.Add(rightSpawn);
+		goalTiles.Add(rightSpawn);
+		goalTiles.Add(leftSpawn);
 
-		leftSpawn.SetGoalForPlayer (game.playerTwo);
-		rightSpawn.SetGoalForPlayer (game.playerOne);
+		leftSpawn.SetGoalForPlayer(game.playerTwo);
+		rightSpawn.SetGoalForPlayer(game.playerOne);
 
-		return (IsPath (startingTiles[0], goalTiles[0]) && 
+		return (IsPath(startingTiles[0], goalTiles[0]) && 
 			IsPath(startingTiles[1], goalTiles[1]));
 	}
 	

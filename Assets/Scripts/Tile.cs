@@ -17,19 +17,17 @@ public class Tile : MonoBehaviour
 	public TileType type = TileType.Normal;
 	public bool allowsFootsteps;
 
-	List<Tile> _neighbors;
-	SpriteRenderer _pitSprite;
-
 
 	[HideInInspector]
 	public bool visited = false;
-
 	public Player goalFor;
 
+	List<Tile> _neighbors;
+	SpriteRenderer _pitSprite;
 
 	public void Awake()
 	{
-		_neighbors = new List<Tile> ();
+		_neighbors = new List<Tile>();
 		_pitSprite = transform.FindChild("Pit").GetComponent<SpriteRenderer>();
 	}
 
@@ -37,9 +35,12 @@ public class Tile : MonoBehaviour
 	{
 		allowsFootsteps = allow;
 
-		if (allowsFootsteps) {
+		if (allowsFootsteps) 
+		{
 			GetComponent<SpriteRenderer> ().sprite = snowTiles[15];
-		} else {
+		} 
+		else 
+		{
 			GetComponent<SpriteRenderer> ().sprite = defaultSprite;
 			//GetComponent<SpriteRenderer> ().color = new Color(0,0,0,0);
 		}
@@ -47,7 +48,8 @@ public class Tile : MonoBehaviour
 
 	public void SetPit(bool isPit)
 	{
-		if (isPit) {
+		if (isPit) 
+		{
 			type = TileType.Pit;
 			//GetComponent<SpriteRenderer> ().color = Color.red;
 		}
@@ -58,14 +60,12 @@ public class Tile : MonoBehaviour
 		goalFor = player;
 		GetComponent<SpriteRenderer> ().color = Color.blue;
 		transform.FindChild ("Snow").GetComponent<SpriteRenderer>().color = Color.blue;
-
 	}
-
-
+	
 	public void AddNeighbors(Tile neighbor)
 	{
-		_neighbors.Add (neighbor);
-		neighbor._neighbors.Add (this);
+		_neighbors.Add(neighbor);
+		neighbor._neighbors.Add(this);
 	}
 
 	public bool IsDeadly()
@@ -75,15 +75,19 @@ public class Tile : MonoBehaviour
 
 	public bool CanReachTile(Tile target)
 	{
-		if (IsDeadly () || isObstacle) {
+		if (IsDeadly () || isObstacle)
+		{
 			return false;
 		}
-		if (this == target) {
+		if (this == target) 
+		{
 			return true;
 		}
-		if (!visited) {
+		if (!visited) 
+		{
 			visited = true;
-			foreach (Tile neighbor in _neighbors) {
+			foreach (Tile neighbor in _neighbors) 
+			{
 				if (neighbor.CanReachTile(target))
 				{
 					return true;
@@ -95,7 +99,7 @@ public class Tile : MonoBehaviour
 	
 	public void AutoTile()
 	{
-		SpriteRenderer snow = transform.FindChild ("Snow").GetComponent<SpriteRenderer> ();
+		SpriteRenderer snow = transform.FindChild ("Snow").GetComponent<SpriteRenderer>();
 		//snow.gameObject.SetActive (false);
 		if (allowsFootsteps) 
 		{

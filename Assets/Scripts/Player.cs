@@ -143,10 +143,10 @@ public class Player : MonoBehaviour
 
 	void MoveTo(Vector2 targetCoord)
 	{
-		Tile targetTile = tileMap.GetTileAt (targetCoord);
+		Tile targetTile = tileMap.GetTileAt(targetCoord);
 		if (targetTile.isObstacle == false)
 		{
-			Tile currentTile = tileMap.GetTileAt (coord);
+			Tile currentTile = tileMap.GetTileAt(coord);
 			
 			if (targetTile.allowsFootsteps || currentTile.allowsFootsteps) 
 			{
@@ -159,14 +159,14 @@ public class Player : MonoBehaviour
 			
 			if (targetTile.IsDeadly()) 
 			{
-				GetComponent<SpriteRenderer> ().color = Color.red;
+				GetComponent<SpriteRenderer>().color = Color.red;
 				isDead = true;
 
 				AudioSource.PlayClipAtPoint(Random.Range(0, 2) == 0 ? fellDown1 : fellDown2, Vector3.zero);
 			}
 			else if (targetTile == goalTile)
 			{
-				GetComponent<SpriteRenderer> ().color = Color.green;
+				GetComponent<SpriteRenderer>().color = Color.green;
 				reachedGoal = true;
 			}
 			else
@@ -221,7 +221,7 @@ public class Player : MonoBehaviour
 	}
 	
 	// Update is called once per frame
-	void Update () 
+	void Update() 
 	{
 		if (isDead == false && isEnabled == true)
 		{
