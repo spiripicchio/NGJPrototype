@@ -12,6 +12,9 @@ public class Game : MonoBehaviour
 	public Text message;
 	public Text score1Text;
 	public Text score2Text;
+	public Text title;
+	public Text credits1;
+	public Text credits2;
 	public AudioClip lost1;
 	public AudioClip lost2;
 	public AudioClip winRound;
@@ -42,16 +45,19 @@ public class Game : MonoBehaviour
 
 	IEnumerator MainLoop()
 	{
-		message.text = "FRENEMESKIMOS";
-
 		while (_startGame == false)
 		{
 			yield return null;
 		}
 
-		message.text = "";
+		title.text = "";
+		credits1.text = "";
+		credits2.text = "";
 
-		yield return new WaitForSeconds(1);
+		yield return new WaitForSeconds(0.8f);
+
+		score1Text.text = "0";
+		score2Text.text = "0";
 
 		soundtrack.Play();
 

@@ -42,6 +42,7 @@ public class Player : MonoBehaviour
 	Vector2 _previousDirectionInput;
 	bool _vibrating;
 	AudioClip _swoop;
+	float _moveSpeed = 15;
 
 	// Use this for initialization
 	void Start() 
@@ -154,7 +155,7 @@ public class Player : MonoBehaviour
 				footsteps.transform.parent = tileMap.transform;
 			}
 			
-			transform.localPosition = targetCoord;
+//			transform.localPosition = targetCoord;
 			coord = targetCoord;
 			
 			if (targetTile.IsDeadly()) 
@@ -241,6 +242,11 @@ public class Player : MonoBehaviour
 				}
 				
 				CheckDanger(coord + dir);
+			}
+			else
+			{
+				Vector3 coord3 = new Vector3(coord.x, coord.y, 0);
+				transform.localPosition += (coord3 - transform.localPosition) / 2 * Time.deltaTime * _moveSpeed;
 			}
 			
 			// Update vibration
