@@ -48,9 +48,6 @@ public class Player : MonoBehaviour
 	{
 		_swoop = (playerIndex == PlayerIndex.One) ? swoop1 : swoop2;
 
-		RotateTo(currentDirection);
-		transform.localPosition = new Vector3(coord.x, coord.y, -1);
-
 		isEnabled = true;
 	}
 
@@ -63,6 +60,7 @@ public class Player : MonoBehaviour
 		_previousDirectionInput = Vector2.zero;
 		_vibrating = false;
 		GetComponent<SpriteRenderer> ().color = Color.white;
+		RotateTo((playerIndex == PlayerIndex.One) ? Vector2.right : -Vector2.right);
 	}
 
 	Vector2 GetDirectionInput()

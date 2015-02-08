@@ -9,12 +9,13 @@ public class Game : MonoBehaviour
 	public TileMap tileMap;
 	public float respawnCooldown;
 	public int lives;
-	public Text outroMessage;
+	public Text message;
 	public Text score1Text;
 	public Text score2Text;
 	public AudioClip lost1;
 	public AudioClip lost2;
 	public AudioClip winRound;
+	public AudioSource soundtrack;
 
 	enum WinningPlayer
 	{
@@ -31,6 +32,7 @@ public class Game : MonoBehaviour
 	bool _inCoroutineTwo;
 	int _score1;
 	int _score2;
+	bool _startGame;
 
 	// Use this for initialization
 	void Start() 
@@ -40,13 +42,25 @@ public class Game : MonoBehaviour
 
 	IEnumerator MainLoop()
 	{
+		message.text = "FRENEMESKIMOS";
+
+		while (_startGame == false)
+		{
+			yield return null;
+		}
+
+		message.text = "";
+
+		yield return new WaitForSeconds(1);
+
+		soundtrack.Play();
+
 		while (true)
 		{
 			Reset();
 
-			tileMap.FadePits();
-
-			yield return new WaitForSeconds(5);
+			playerOne.isEnabled = true;
+			playerTwo.isEnabled = true;
 
 			while (_winningPlayer == WinningPlayer.Unknown)
 			{
@@ -71,36 +85,41 @@ public class Game : MonoBehaviour
 			{
 				case WinningPlayer.PlayerOne:
 				{
-					outroMessage.text = "Player One Wins!";
+					message.text = "Player One Wins!";
 					++_score1;
 					score1Text.text = _score1.ToString();
 
 					AudioSource.PlayClipAtPoint(winRound, Vector3.zero);
+
 					break;
 				}
 
 				case WinningPlayer.PlayerTwo:
 				{
-					outroMessage.text = "Player Two Wins!";
+					message.text = "Player Two Wins!";
 					++_score2;
 					score2Text.text = _score2.ToString();
 
 					AudioSource.PlayClipAtPoint(winRound, Vector3.zero);
+				
 					break;
 				}
 
 				case WinningPlayer.None:
 				{
-					outroMessage.text = "Everyone Loses!";
+					message.text = "Everyone Loses!";
 
 					AudioSource.PlayClipAtPoint(Random.Range(0, 2) == 0 ? lost1 : lost2, Vector3.zero);
+				
 					break;
 				}
 			}
 
 			playerOne.isEnabled = false;
 			playerTwo.isEnabled = false;
-
+			
+			tileMap.FadePits();
+			
 			yield return new WaitForSeconds(5);
 		}
 	}
@@ -119,7 +138,7 @@ public class Game : MonoBehaviour
 		playerOne.goalTile = tileMap.goalTiles[0];
 		playerTwo.goalTile = tileMap.goalTiles[1];
 
-		outroMessage.text = "";
+		message.text = "";
 	}
 
 	// Update is called once per frame
@@ -127,10 +146,15 @@ public class Game : MonoBehaviour
 	{
 		if (Input.GetButtonDown("Jump") == true)
 		{
-			_score1 = 0;
-			score1Text.text = "0";
-			_score2 = 0;
-			score2Text.text = "0";
+			if (_startGame == true)
+			{
+				_score1 = 0;
+				score1Text.text = "0";
+				_score2 = 0;
+				score2Text.text = "0";
+			}
+
+			_startGame = true;
 		}
 
 		if (_winningPlayer == WinningPlayer.Unknown)

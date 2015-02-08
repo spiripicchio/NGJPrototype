@@ -36,7 +36,7 @@ public class TileMap : MonoBehaviour
 	// Use this for initialization
 	void Start() 
 	{
-		Generate();
+		//Generate();
 	}
 
 	public void Generate()

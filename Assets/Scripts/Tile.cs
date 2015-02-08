@@ -145,9 +145,18 @@ public class Tile : MonoBehaviour
 	{
 		while (_pitSprite.color.a < 1.0f)
 		{
-			_pitSprite.color = new Color(_pitSprite.color.r, _pitSprite.color.g, _pitSprite.color.b, _pitSprite.color.a + 0.01f);
+			_pitSprite.color = new Color(_pitSprite.color.r, _pitSprite.color.g, _pitSprite.color.b, _pitSprite.color.a + 0.06f);
 
-			yield return new WaitForSeconds(0.1f);
+			yield return new WaitForSeconds(0.01f);
+		}
+
+		yield return new WaitForSeconds(3);
+
+		while (_pitSprite.color.a > 0)
+		{
+			_pitSprite.color = new Color(_pitSprite.color.r, _pitSprite.color.g, _pitSprite.color.b, _pitSprite.color.a - 0.06f);
+			
+			yield return new WaitForSeconds(0.01f);
 		}
 	}
 }
