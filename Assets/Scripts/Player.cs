@@ -33,6 +33,11 @@ public class Player : MonoBehaviour
 	public Tile goalTile;
 	public int lives;
 
+	public Sprite rightSprite;
+	public Sprite leftSprite;
+	public Sprite upSprite;
+	public Sprite downSprite;
+
 	public AudioClip swoop1;
 	public AudioClip swoop2;
 	public AudioClip fellDown1;
@@ -43,6 +48,13 @@ public class Player : MonoBehaviour
 	bool _vibrating;
 	AudioClip _swoop;
 	float _moveSpeed = 15;
+	SpriteRenderer _spriteRenderer;
+
+
+	void Awake()
+	{
+		_spriteRenderer = GetComponent<SpriteRenderer>();
+	}
 
 	// Use this for initialization
 	void Start() 
@@ -60,7 +72,7 @@ public class Player : MonoBehaviour
 		_moveTimer = 0;
 		_previousDirectionInput = Vector2.zero;
 		_vibrating = false;
-		GetComponent<SpriteRenderer> ().color = Color.white;
+		_spriteRenderer.color = Color.white;
 		RotateTo((playerIndex == PlayerIndex.One) ? Vector2.right : -Vector2.right);
 	}
 
@@ -137,7 +149,24 @@ public class Player : MonoBehaviour
 	void RotateTo(Vector2 direction)
 	{
 		currentDirection = direction;
-		transform.localRotation = Quaternion.LookRotation(new Vector3(0,0,-1), direction);
+		//transform.localRotation = Quaternion.LookRotation(new Vector3(0,0,-1), direction);
+
+		if (direction == Vector2.right)
+		{
+			_spriteRenderer.sprite = rightSprite;
+		}
+		else if (direction == -Vector2.right)
+		{
+			_spriteRenderer.sprite = leftSprite;
+		}
+		else if (direction == Vector2.up)
+		{
+			_spriteRenderer.sprite = upSprite;
+		}
+		else if (direction == -Vector2.up)
+		{
+			_spriteRenderer.sprite = downSprite;
+		}
 
 		AudioSource.PlayClipAtPoint(_swoop, Vector3.zero);
 	}
