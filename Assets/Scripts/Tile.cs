@@ -53,13 +53,22 @@ public class Tile : MonoBehaviour
 			type = TileType.Pit;
 			//GetComponent<SpriteRenderer> ().color = Color.red;
 		}
+		else
+		{
+			type = TileType.Normal;
+		}
 	}
 
 	public void SetGoalForPlayer(Player player)
 	{
 		goalFor = player;
-		GetComponent<SpriteRenderer> ().color = Color.blue;
-		transform.FindChild ("Snow").GetComponent<SpriteRenderer>().color = Color.blue;
+		//GetComponent<SpriteRenderer> ().color = Color.blue;
+		//transform.FindChild ("Snow").GetComponent<SpriteRenderer>().color = Color.blue;
+		transform.FindChild ("Iglo").GetComponent<SpriteRenderer>().color = Color.white;
+		if (transform.localPosition.x > 10)
+		{
+			transform.FindChild ("Iglo").transform.localScale = new Vector3(-1, 1, 1);
+		}
 	}
 	
 	public void AddNeighbors(Tile neighbor)
@@ -139,15 +148,20 @@ public class Tile : MonoBehaviour
 		snow.sprite = snowTiles[idx];
 	}
 
-	public void ShowPit()
+	public void ShowPit( bool fadeOut = true)
 	{
 		if (IsDeadly() == true)
 		{
-			StartCoroutine(FadePit());
+			StartCoroutine(FadePit(fadeOut: fadeOut));
 		}
 	}
 
-	IEnumerator FadePit()
+	public void ShowSplash()
+	{
+		GetComponentInChildren<ParticleSystem>().Emit(50);
+	}
+
+	IEnumerator FadePit( bool fadeOut = true)
 	{
 		while (_pitSprite.color.a < 1.0f)
 		{
@@ -156,13 +170,17 @@ public class Tile : MonoBehaviour
 			yield return new WaitForSeconds(0.01f);
 		}
 
-		yield return new WaitForSeconds(3);
-
-		while (_pitSprite.color.a > 0)
+		if (fadeOut)
 		{
-			_pitSprite.color = new Color(_pitSprite.color.r, _pitSprite.color.g, _pitSprite.color.b, _pitSprite.color.a - 0.06f);
+			yield return new WaitForSeconds(3);
 			
-			yield return new WaitForSeconds(0.01f);
+			while (_pitSprite.color.a > 0)
+			{
+				_pitSprite.color = new Color(_pitSprite.color.r, _pitSprite.color.g, _pitSprite.color.b, _pitSprite.color.a - 0.06f);
+				
+				yield return new WaitForSeconds(0.01f);
+			}
 		}
+
 	}
 }

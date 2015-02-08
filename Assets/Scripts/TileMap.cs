@@ -105,16 +105,23 @@ public class TileMap : MonoBehaviour
 			tile.AutoTile(); });
 
 		// Add spawns
-		Tile leftSpawn = GetTileAt(1, Random.Range(1, mapHeight - 1));
-		Tile rightSpawn = GetTileAt(mapWidth - 2, Random.Range(1, mapHeight - 1)); 
+		int rowleft = Random.Range(1, mapHeight - 1);
+		Tile leftSpawn = GetTileAt(2, rowleft);
+		Tile leftGoal = GetTileAt(1, rowleft);
+		GetTileAt(3, rowleft).SetPit(false);
+		int rowright = Random.Range(1, mapHeight - 1);
+		Tile rightSpawn = GetTileAt(mapWidth - 3, rowright); 
+		Tile rightGoal = GetTileAt(mapWidth - 2, rowright);
+		GetTileAt(mapWidth - 4, rowright).SetPit(false);
 
 		startingTiles.Add(leftSpawn);
 		startingTiles.Add(rightSpawn);
-		goalTiles.Add(rightSpawn);
-		goalTiles.Add(leftSpawn);
+		goalTiles.Add(rightGoal);
+		goalTiles.Add(leftGoal);
 
-		leftSpawn.SetGoalForPlayer(game.playerTwo);
-		rightSpawn.SetGoalForPlayer(game.playerOne);
+		leftGoal.SetGoalForPlayer(game.playerTwo);
+		rightGoal.SetGoalForPlayer(game.playerOne);
+	
 
 		return (IsPath(startingTiles[0], goalTiles[0]) && 
 			IsPath(startingTiles[1], goalTiles[1]));

@@ -189,10 +189,13 @@ public class Player : MonoBehaviour
 			
 			if (targetTile.IsDeadly()) 
 			{
-				GetComponent<SpriteRenderer>().color = Color.red;
+				GetComponent<SpriteRenderer>().color = new Color(0,0,0,0);
 				isDead = true;
 
 				AudioSource.PlayClipAtPoint(Random.Range(0, 2) == 0 ? fellDown1 : fellDown2, Vector3.zero);
+
+				targetTile.ShowPit(false);
+				targetTile.ShowSplash();
 			}
 			else if (targetTile == goalTile)
 			{
@@ -253,6 +256,9 @@ public class Player : MonoBehaviour
 	// Update is called once per frame
 	void Update() 
 	{
+		Vector3 coord3 = new Vector3(coord.x, coord.y, 0);
+		transform.localPosition += (coord3 - transform.localPosition) / 2 * Time.deltaTime * _moveSpeed;
+
 		if (isDead == false && isEnabled == true)
 		{
 			Vector2 dir = GetDirectionInput();
@@ -272,11 +278,7 @@ public class Player : MonoBehaviour
 				
 				CheckDanger(coord + dir);
 			}
-			else
-			{
-				Vector3 coord3 = new Vector3(coord.x, coord.y, 0);
-				transform.localPosition += (coord3 - transform.localPosition) / 2 * Time.deltaTime * _moveSpeed;
-			}
+		
 			
 			// Update vibration
 			if (_vibrating) 

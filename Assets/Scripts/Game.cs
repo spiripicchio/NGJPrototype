@@ -9,12 +9,14 @@ public class Game : MonoBehaviour
 	public TileMap tileMap;
 	public float respawnCooldown;
 	public int lives;
+	public int maxScore;
 	public Text message;
 	public Text score1Text;
 	public Text score2Text;
 	public Text title;
 	public Text credits1;
 	public Text credits2;
+	public Text instructions;
 	public AudioClip lost1;
 	public AudioClip lost2;
 	public AudioClip winRound;
@@ -53,6 +55,7 @@ public class Game : MonoBehaviour
 		title.text = "";
 		credits1.text = "";
 		credits2.text = "";
+		instructions.text = "";
 
 		yield return new WaitForSeconds(0.8f);
 
