@@ -100,22 +100,22 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   defaultSprite: {fileID: 21300000, guid: 5ad1d56fd984dfd42b8d118471c51201, type: 3}
   snowTiles:
-  - {fileID: 21300000, guid: 9ac639fea61f8804c81a9d43884f341a, type: 3}
-  - {fileID: 21300002, guid: 9ac639fea61f8804c81a9d43884f341a, type: 3}
-  - {fileID: 21300004, guid: 9ac639fea61f8804c81a9d43884f341a, type: 3}
-  - {fileID: 21300006, guid: 9ac639fea61f8804c81a9d43884f341a, type: 3}
-  - {fileID: 21300008, guid: 9ac639fea61f8804c81a9d43884f341a, type: 3}
-  - {fileID: 21300010, guid: 9ac639fea61f8804c81a9d43884f341a, type: 3}
-  - {fileID: 21300012, guid: 9ac639fea61f8804c81a9d43884f341a, type: 3}
-  - {fileID: 21300014, guid: 9ac639fea61f8804c81a9d43884f341a, type: 3}
-  - {fileID: 21300016, guid: 9ac639fea61f8804c81a9d43884f341a, type: 3}
-  - {fileID: 21300018, guid: 9ac639fea61f8804c81a9d43884f341a, type: 3}
-  - {fileID: 21300020, guid: 9ac639fea61f8804c81a9d43884f341a, type: 3}
-  - {fileID: 21300022, guid: 9ac639fea61f8804c81a9d43884f341a, type: 3}
-  - {fileID: 21300024, guid: 9ac639fea61f8804c81a9d43884f341a, type: 3}
-  - {fileID: 21300026, guid: 9ac639fea61f8804c81a9d43884f341a, type: 3}
-  - {fileID: 21300028, guid: 9ac639fea61f8804c81a9d43884f341a, type: 3}
-  - {fileID: 21300030, guid: 9ac639fea61f8804c81a9d43884f341a, type: 3}
+  - {fileID: 21300010, guid: e68745afb354ead4ea37e6686c385f11, type: 3}
+  - {fileID: 21300002, guid: e68745afb354ead4ea37e6686c385f11, type: 3}
+  - {fileID: 21300012, guid: e68745afb354ead4ea37e6686c385f11, type: 3}
+  - {fileID: 21300004, guid: e68745afb354ead4ea37e6686c385f11, type: 3}
+  - {fileID: 21300018, guid: e68745afb354ead4ea37e6686c385f11, type: 3}
+  - {fileID: 21300026, guid: e68745afb354ead4ea37e6686c385f11, type: 3}
+  - {fileID: 21300020, guid: e68745afb354ead4ea37e6686c385f11, type: 3}
+  - {fileID: 21300028, guid: e68745afb354ead4ea37e6686c385f11, type: 3}
+  - {fileID: 21300008, guid: e68745afb354ead4ea37e6686c385f11, type: 3}
+  - {fileID: 21300000, guid: e68745afb354ead4ea37e6686c385f11, type: 3}
+  - {fileID: 21300014, guid: e68745afb354ead4ea37e6686c385f11, type: 3}
+  - {fileID: 21300006, guid: e68745afb354ead4ea37e6686c385f11, type: 3}
+  - {fileID: 21300016, guid: e68745afb354ead4ea37e6686c385f11, type: 3}
+  - {fileID: 21300024, guid: e68745afb354ead4ea37e6686c385f11, type: 3}
+  - {fileID: 21300022, guid: e68745afb354ead4ea37e6686c385f11, type: 3}
+  - {fileID: 21300030, guid: e68745afb354ead4ea37e6686c385f11, type: 3}
   isObstacle: 0
   type: 0
   allowsFootsteps: 0
