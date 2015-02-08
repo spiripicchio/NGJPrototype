@@ -5,6 +5,7 @@ using System.Collections;
 public class Tile : MonoBehaviour 
 {
 	public Sprite defaultSprite;
+	public Sprite trashedIglooSprite;
 	public List<Sprite> snowTiles;
 	public bool isObstacle;
 
@@ -69,6 +70,12 @@ public class Tile : MonoBehaviour
 		{
 			transform.FindChild ("Iglo").transform.localScale = new Vector3(-1, 1, 1);
 		}
+	}
+
+	public void TrashIgloo()
+	{
+		transform.FindChild("Iglo").GetComponent<SpriteRenderer>().sprite = trashedIglooSprite;
+		transform.FindChild("Poop").GetComponent<ParticleSystem>().Emit(50);
 	}
 	
 	public void AddNeighbors(Tile neighbor)
@@ -158,7 +165,7 @@ public class Tile : MonoBehaviour
 
 	public void ShowSplash()
 	{
-		GetComponentInChildren<ParticleSystem>().Emit(50);
+		transform.FindChild("Splash").GetComponent<ParticleSystem>().Emit(50);
 	}
 
 	IEnumerator FadePit( bool fadeOut = true)

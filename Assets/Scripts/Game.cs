@@ -20,6 +20,7 @@ public class Game : MonoBehaviour
 	public AudioClip lost1;
 	public AudioClip lost2;
 	public AudioClip winRound;
+	public AudioClip winMatch;
 	public AudioSource soundtrack;
 
 	enum WinningPlayer
@@ -87,30 +88,50 @@ public class Game : MonoBehaviour
 				_inCoroutineTwo = false;
 			}
 
-			yield return new WaitForSeconds(1.5f);
+			bool matchOver = false;
 
 			// Outro
 			switch (_winningPlayer)
 			{
 				case WinningPlayer.PlayerOne:
 				{
-					message.text = "Player One Wins!";
 					++_score1;
 					score1Text.text = _score1.ToString();
 
-					AudioSource.PlayClipAtPoint(winRound, Vector3.zero);
+					if (_score1 == maxScore)
+					{
+						matchOver = true;
+						message.text = "Player One Wins Match!";
+
+						AudioSource.PlayClipAtPoint(winMatch, Vector3.zero);
+					}
+					else
+					{
+						message.text = "Player One Wins Round!";
+						AudioSource.PlayClipAtPoint(winRound, Vector3.zero);
+					}
 
 					break;
 				}
 
 				case WinningPlayer.PlayerTwo:
 				{
-					message.text = "Player Two Wins!";
 					++_score2;
 					score2Text.text = _score2.ToString();
 
-					AudioSource.PlayClipAtPoint(winRound, Vector3.zero);
-				
+					if (_score2 == maxScore)
+					{
+						matchOver = true;
+						message.text = "Player Two Wins Match!";
+						
+						AudioSource.PlayClipAtPoint(winMatch, Vector3.zero);
+					}
+					else
+					{
+						message.text = "Player Two Wins Round!";
+						AudioSource.PlayClipAtPoint(winRound, Vector3.zero);
+					}
+
 					break;
 				}
 
@@ -130,6 +151,13 @@ public class Game : MonoBehaviour
 			tileMap.FadePits();
 			
 			yield return new WaitForSeconds(5);
+
+			if (matchOver == true)
+			{
+				yield return new WaitForSeconds(2);
+
+				Application.LoadLevel(Application.loadedLevel);
+			}
 		}
 	}
 

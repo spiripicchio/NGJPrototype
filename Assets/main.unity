@@ -243,6 +243,10 @@ Prefab:
       value: 
       objectReference: {fileID: 21300000, guid: 70cfe92126f0b4577a30d1bc951bd8ea,
         type: 3}
+    - target: {fileID: 11425150, guid: d40517c7ff1f2704d90dafcb645484fd, type: 2}
+      propertyPath: moveCooldown
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: d40517c7ff1f2704d90dafcb645484fd, type: 2}
   m_IsPrefabParent: 0
@@ -783,7 +787,7 @@ GameObject:
   m_Component:
   - 4: {fileID: 969255421}
   m_Layer: 0
-  m_Name: bg
+  m_Name: Background
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -958,6 +962,10 @@ Prefab:
       value: 
       objectReference: {fileID: 21300000, guid: 29378b1c077ce4f23a2ba106a1154fcc,
         type: 3}
+    - target: {fileID: 11425150, guid: d40517c7ff1f2704d90dafcb645484fd, type: 2}
+      propertyPath: moveCooldown
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: d40517c7ff1f2704d90dafcb645484fd, type: 2}
   m_IsPrefabParent: 0
@@ -1984,6 +1992,7 @@ MonoBehaviour:
   tileMap: {fileID: 1118868310}
   respawnCooldown: 3
   lives: 1
+  maxScore: 3
   message: {fileID: 270164635}
   score1Text: {fileID: 58728588}
   score2Text: {fileID: 147181211}
@@ -1994,6 +2003,7 @@ MonoBehaviour:
   lost1: {fileID: 8300000, guid: 198cca828bce14b6fb2e4e5d8cbee189, type: 3}
   lost2: {fileID: 8300000, guid: 4dfef388409474e39884535b6908f83f, type: 3}
   winRound: {fileID: 8300000, guid: 10e12f0a118504e92814b25d6f78212a, type: 3}
+  winMatch: {fileID: 8300000, guid: 46ef2ff924d154a7f8ef434bbd868d8f, type: 3}
   soundtrack: {fileID: 1246442981}
 --- !u!4 &1992572107
 Transform:

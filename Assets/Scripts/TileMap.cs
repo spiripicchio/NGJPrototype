@@ -121,7 +121,6 @@ public class TileMap : MonoBehaviour
 
 		leftGoal.SetGoalForPlayer(game.playerTwo);
 		rightGoal.SetGoalForPlayer(game.playerOne);
-	
 
 		return (IsPath(startingTiles[0], goalTiles[0]) && 
 			IsPath(startingTiles[1], goalTiles[1]));

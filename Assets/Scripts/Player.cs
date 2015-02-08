@@ -184,7 +184,6 @@ public class Player : MonoBehaviour
 				footsteps.transform.parent = tileMap.transform;
 			}
 			
-//			transform.localPosition = targetCoord;
 			coord = targetCoord;
 			
 			if (targetTile.IsDeadly()) 
@@ -199,7 +198,9 @@ public class Player : MonoBehaviour
 			}
 			else if (targetTile == goalTile)
 			{
-				GetComponent<SpriteRenderer>().color = Color.green;
+				GetComponent<SpriteRenderer>().color = new Color(0,0,0,0);
+				goalTile.TrashIgloo();
+
 				reachedGoal = true;
 			}
 			else
